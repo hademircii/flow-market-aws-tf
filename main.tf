@@ -18,9 +18,9 @@ data "template_file" "flow_market" {
   vars {
     image        = "${var.flow_market_image}"
     log_group    = "${aws_cloudwatch_log_group.name}"
-    aws_region   = "${locals.region}"
-    database_url = "${locals.postgres_url}"
-    redis_url    = "${locals.redis_url}"
+    aws_region   = "${local.region}"
+    database_url = "${local.postgres_url}"
+    redis_url    = "${local.redis_url}"
     admin_name   = "${var.admin_name}"
     admin_email  = "${var.admin_email}"
     secret       = "${var.app_secret}"
@@ -32,7 +32,7 @@ data "template_file" "flow_market_worker" {
 
   vars {
     image        = "${var.flow_market_worker_image}"
-    aws_region   = "${locals.region.region}"
+    aws_region   = "${local.region.region}"
     log_group    = "${aws_cloudwatch_log_group.name}"
     database_url = "${local.postgres_url}"
     redis_url    = "${local.redis_url}"
