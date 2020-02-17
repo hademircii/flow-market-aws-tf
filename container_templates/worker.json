@@ -1,0 +1,32 @@
+{
+    "name": "flow_market_worker",
+    "image": "${flow_market_worker_image}",
+    "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+            "awslogs-region": "{aws_region}",
+            "awslogs-group": "{aws_logs_group}",
+            "awslogs-stream-prefix": "ecs-flm-worker"
+        }
+    },
+    "environment": [
+        {
+            "name": "REDIS_URL",
+            "value": "${redis_url}"
+        },
+        {
+            "name": "DATABASE_URL",
+            "value": "${database_url}"
+        }
+    ],
+    "dependsOn": [
+        {
+            "containerName": "flow_market_postgres",
+            "condition": "HEALTHY"
+        },
+        {
+            "containerName": "flow_market_redis",
+            "condition": "HEALTHY"
+        }
+    ]
+}

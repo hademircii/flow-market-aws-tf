@@ -1,0 +1,24 @@
+{
+    "name": "flow_market_redis",
+    "image": "redis:latest",
+    "essential": "true",
+    "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+            "awslogs-region": "{aws_region}",
+            "awslogs-group": "{aws_logs_group}",
+            "awslogs-stream-prefix": "ecs-flm-redis"
+        }
+    },
+    "portMappings": [
+        {
+          "containerPort": 6379
+        }
+    ],
+    "mountPoints": [
+        {
+            "containerPath": "/data/dump.rdb",
+            "sourceVolume": "${redis_volume_name}"
+        }
+    ]
+}

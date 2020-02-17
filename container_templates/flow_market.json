@@ -1,0 +1,57 @@
+{
+    "name": "flow_market",
+    "image": "${flow_market_image}",
+    "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+            "awslogs-region": "{aws_region}",
+            "awslogs-group": "{aws_logs_group}",
+            "awslogs-stream-prefix": "ecs-flm-app"
+        }
+    },
+    "portMappings": [
+        {
+          "containerPort": 8000
+        }
+    ],
+    "environment": [
+        {
+            "name": "DJANGO_SU_NAME",
+            "value": "${admin_name}"
+        },
+        {
+            "name": "DJANGO_SU_EMAIL",
+            "value": "${admin_email}"
+        },
+        {
+            "name": "DJANGO_SU_PASSWORD",
+            "value": "${admin_password}"
+        },
+        {
+            "name": "REDIS_URL",
+            "value": "${redis_url}"
+        },
+        {
+            "name": "DATABASE_URL",
+            "value": "${database_url}"
+        },
+        {
+            "name": "SECRET",
+            "value": "${app_secret}"
+        }
+    ],
+    "dependsOn": [
+        {
+            "containerName": "flow_market_postgres",
+            "condition": "HEALTHY"
+        },
+        {
+            "containerName": "flow_market_redis",
+            "condition": "HEALTHY"
+        },
+        {
+            "containerName": "flow_market_worker",
+            "condition": "HEALTHY"
+        }
+    ]
+}

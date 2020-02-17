@@ -1,0 +1,19 @@
+
+{
+    "name": "flow_market_nginx",
+    "image": "nginx:latest",
+    "portMappings": [
+        {
+        "containerPort": 80,
+        "protocol": "tcp"
+        }
+    ],
+    "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+            "awslogs-region": "{aws_region}",
+            "awslogs-group": "{aws_logs_group}",
+            "awslogs-stream-prefix": "ecs-flm-nginx"
+        }
+    }
+}

@@ -1,0 +1,38 @@
+{
+    "name": "flow_market_postgres",
+    "image": "postgres:latest",
+    "essential": "true",
+    "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+            "awslogs-region": "{aws_region}",
+            "awslogs-group": "{aws_logs_group}",
+            "awslogs-stream-prefix": "ecs-flm-postgres"
+        }
+    },
+    "environment": [
+        {
+            "name": "POSTGRES_USER",
+            "value": "${pg_user}"
+        },
+        {
+            "name": "POSTGRES_PASSWORD",
+            "value": "${pg_password}"
+        },
+        {
+            "name": "POSTGRES_DB",
+            "value": "${pg_db_name}"
+        }
+    ],
+    "portMappings": [
+        {
+          "containerPort": 5432
+        }
+    ],
+    "mountPoints": [
+        {
+            "containerPath": "/var/lib/postgresql/data",
+            "sourceVolume": "${pg_volume_name}"
+        }
+    ]
+}
